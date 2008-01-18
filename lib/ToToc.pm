@@ -9,23 +9,26 @@ use vars qw( $VERSION );
 
 use Pod::TOC;
 
-$VERSION = '1.07';
+use warnings;
+no warnings;
+
+$VERSION = '1.08';
 
 sub is_pageable        { 1 }
 sub write_with_binmode { 0 }
 sub output_extension   { 'toc' }
 
-sub parse_from_file 
+sub parse_from_file
 	{
 	my( $self, $file, $output_fh ) = @_; # Pod::Perldoc object
-	
+
 	my $parser = Pod::TOC->new();
 
 	$parser->output_fh( $output_fh );
-		
+
 	$parser->parse_file( $file );
 	}
-	
+
 =head1 NAME
 
 Pod::Perldoc::ToToc - Translate Pod to a Table of Contents
@@ -38,7 +41,7 @@ Use this module with C<perldoc>'s C<-M> switch.
 
 =head1 DESCRIPTION
 
-This module uses the C<Pod::Perldoc> module to extract a table of 
+This module uses the C<Pod::Perldoc> module to extract a table of
 contents from a pod file.
 
 =head1 METHODS
@@ -72,7 +75,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2006-2007, brian d foy, All Rights Reserved.
+Copyright (c) 2006-2008, brian d foy, All Rights Reserved.
 
 You may redistribute this under the same terms as Perl itself.
 
