@@ -1,25 +1,19 @@
- # $Id$
 package Pod::Perldoc::ToToc;
 use strict;
-
-use base qw(Pod::Perldoc::BaseTo);
-
-use subs qw();
-use vars qw( $VERSION );
+use parent qw(Pod::Perldoc::BaseTo);
 
 use Pod::TOC;
 
 use warnings;
 no warnings;
 
-$VERSION = '1.09';
+our $VERSION = '1.10';
 
 sub is_pageable        { 1 }
 sub write_with_binmode { 0 }
 sub output_extension   { 'toc' }
 
-sub parse_from_file
-	{
+sub parse_from_file {
 	my( $self, $file, $output_fh ) = @_; # Pod::Perldoc object
 
 	my $parser = Pod::TOC->new();
@@ -61,13 +55,9 @@ L<Pod::Perldoc>
 
 =head1 SOURCE AVAILABILITY
 
-This source is part of a Google Code project which always has the
-latest sources in SVN.
+This source is in Github:
 
-	http://code.google.com/p/brian-d-foy/source
-
-If, for some reason, I disappear from the world, one of the other
-members of the project can shepherd this module appropriately.
+	https://github.com/briandfoy/pod-perldoc-totoc
 
 =head1 AUTHOR
 
@@ -75,7 +65,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2006-2008, brian d foy, All Rights Reserved.
+Copyright (c) 2006-2013, brian d foy, All Rights Reserved.
 
 You may redistribute this under the same terms as Perl itself.
 

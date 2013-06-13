@@ -1,34 +1,31 @@
-# $Id: Makefile.PL,v 1.4 2004/07/04 17:04:17 comdog Exp $
-use ExtUtils::MakeMaker;
+use ExtUtils::MakeMaker 6.46;
 
-require 5.006;
+require 5.008;
 
-eval "use Test::Manifest 1.14";
+eval "use Test::Manifest 1.21";
 
 # Stupid Mac extended attribute files
 unlink glob ( map { "$_/._*" } ( '', qw(t lib examples) ) );
 
 WriteMakefile(
 	'NAME'          => 'Pod::Perldoc::ToToc',
-	'VERSION_FROM'  => 'lib/ToToc.pm',
+	'VERSION_FROM'  => 'lib/Pod/Perldoc/ToToc.pm',
 	'LICENSE'       => 'perl',
 	'AUTHOR'        => 'brian d foy <bdfoy@cpan.org>',
 	'ABSTRACT'      => 'Turn one or more Pod files into a table of contents',
 
 	'PREREQ_PM'    => {
-		'Test::More'   => '0',
-		'Pod::Perldoc' => '0',
-		'Pod::Simple'  => '0',
+		'ExtUtils::MakeMaker' => '6.46',
+		'Test::More'          => '0.95',
+		'Pod::Perldoc'        => '0',
+		'Pod::Simple'         => '0',
+		'parent'              => '0',
 		},
 
-	'PM'           => {
-		'lib/ToToc.pm'         => '$(INST_LIBDIR)/ToToc.pm',
-		'lib/TOC.pm'           => 'blib/lib/Pod/TOC.pm',
-		},
-
-	'MAN3PODS'     => {
-		'lib/ToToc.pm' => '$(INST_MAN3DIR)/Pod::Perldoc::ToToc.3',
-		'lib/TOC.pm'   => '$(INST_MAN3DIR)/Pod::TOC.3',
+	'META_MERGE' => {
+		resources => {
+			repository => 'https://github.com/briandfoy/pod-perldoc-totoc',
+			},
 		},
 
 	clean  => { FILES    => q|Pod-Perldoc-ToToc-*| },

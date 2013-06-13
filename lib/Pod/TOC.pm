@@ -1,43 +1,37 @@
-# $Id$
 package Pod::TOC;
 use strict;
 
-use base qw( Pod::Simple );
-
-use subs qw();
-use vars qw( $VERSION );
+use parent qw( Pod::Simple );
 
 use warnings;
 no warnings;
 
-$VERSION = '1.09';
+our $VERSION = '1.10';
 
 BEGIN {
 	my @Head_levels = 0 .. 4;
-	
+
 	my %flags = map { ( "head$_", $_ ) } @Head_levels;
-	
-	foreach my $directive ( keys %flags )
-		{
+
+	foreach my $directive ( keys %flags ) {
 		no strict 'refs';
 
-		*{"_start_$directive"} = sub { 
-			$_[0]->_set_flag( "_start_$directive" ); 
-			print { $_[0]->output_fh } "\t" x ( $_[0]->_get_flag - 1 ) 
+		*{"_start_$directive"} = sub {
+			$_[0]->_set_flag( "_start_$directive" );
+			print { $_[0]->output_fh } "\t" x ( $_[0]->_get_flag - 1 )
 			};
 
-		*{"_end_$directive"}   = sub { 
-			$_[0]->_set_flag( "_end_$directive" ); 
-			print { $_[0]->output_fh } "\n" 
+		*{"_end_$directive"}   = sub {
+			$_[0]->_set_flag( "_end_$directive" );
+			print { $_[0]->output_fh } "\n"
 			};
 		}
-	
+
 	sub _is_valid_tag { exists $flags{ $_[1] } }
 	sub _get_tag      {        $flags{ $_[1] } }
 	}
 
-sub _handle_element
-	{
+sub _handle_element {
 	my( $self, $element, $args ) = @_;
 
 	my $caller_sub = ( caller(1) )[3];
@@ -48,20 +42,17 @@ sub _handle_element
 	$sub->( $self, $args ) if $sub;
 	}
 
-sub _handle_element_start
-	{
+sub _handle_element_start {
 	my $self = shift;
 	$self->_handle_element( @_ );
 	}
 
-sub _handle_element_end
-	{
+sub _handle_element_end {
 	my $self = shift;
 	$self->_handle_element( @_ );
 	}
 
-sub _handle_text
-	{
+sub _handle_text {
 	return unless $_[0]->_get_flag;
 
 	print { $_[0]->output_fh } $_[1];
@@ -73,8 +64,7 @@ my $Flag;
 
 sub _get_flag { $Flag }
 
-sub _set_flag
-    {
+sub _set_flag {
 	my( $self, $caller ) = @_;
 
 	return unless $caller;
@@ -127,13 +117,9 @@ L<Pod::Perldoc::ToToc>, L<Pod::Simple>
 
 =head1 SOURCE AVAILABILITY
 
-This source is part of a Google Code project which always has the
-latest sources in SVN.
+This source is in Github:
 
-	http://code.google.com/p/brian-d-foy/source
-
-If, for some reason, I disappear from the world, one of the other
-members of the project can shepherd this module appropriately.
+	https://github.com/briandfoy/pod-perldoc-totoc
 
 =head1 AUTHOR
 
@@ -141,11 +127,11 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2006-2008 brian d foy.  All rights reserved.
+Copyright (c) 2006-2013, brian d foy, All Rights Reserved.
 
-This program is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+You may redistribute this under the same terms as Perl itself.
 
 =cut
+
 
 1;
