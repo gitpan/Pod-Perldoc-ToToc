@@ -25,4 +25,4 @@ requires:
   parent: 0
 resources:
   repository: https://github.com/briandfoy/pod-perldoc-totoc
-version: 1.10
+version: 1.11
